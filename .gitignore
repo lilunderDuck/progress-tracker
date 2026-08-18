@@ -8,6 +8,7 @@ app.config.timestamp_*.js
 public
 bin
 build
+bun.lock
 
 # Environment
 .env
