@@ -1,0 +1,27 @@
+{
+  "name": "vite-template-solid",
+  "version": "0.0.0",
+  "description": "",
+  "type": "module",
+  "scripts": {
+    "start": "vite --open",
+    "dev": "vite --open",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "solid-devtools": "^0.34.3",
+    "typescript": "^5.7.2",
+    "vite": "^7.1.4",
+    "vite-plugin-solid": "^2.11.8"
+  },
+  "dependencies": {
+    "@corvu/popover": "^0.2.0",
+    "@corvu/tooltip": "^0.2.2",
+    "@modular-forms/solid": "^0.25.1",
+    "molcss": "^0.2.5",
+    "solid-icons": "1.1.0",
+    "solid-js": "^1.9.5"
+  }
+}
