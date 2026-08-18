@@ -1,5 +1,5 @@
 import { Anchor, Content, Portal, Root } from "@corvu/popover"
-import { Component, createSignal, For, Show } from "solid-js"
+import { Component, createMemo, createSignal, For, Show } from "solid-js"
 import { FaSolidCheck } from "solid-icons/fa"
 // ...
 import { css } from "molcss"
@@ -7,7 +7,6 @@ import { css } from "molcss"
 import { Label } from "../Label"
 import { Button } from "../Button"
 import { BaseOnChangeHandler } from "../../../hook"
-import { arrayIntersection } from "../../../utils"
 
 const select__root = css`
   padding-bottom: 10px;
@@ -74,8 +73,13 @@ export interface ISelectProps<T extends string | number> extends BaseOnChangeHan
   ItemSelectedComponent$?: Component<SelectItemComponentProps<T> & {
     totalItems$: number
   }>
-  onSelectingItem$?: (selectedItem: T[], currentRule: SelectItemDisablingRule<T>) => SelectItemDisablingRule<T>
+  itemDisablingRuleRegistry$?: IncompatibilityRuleRegistry<T>
 }
+
+export type IncompatibilityRuleRegistry<T extends string | number> = {
+  ifInclude$: T
+  thenDisables$: T[]
+}[]
 
 // oh god, what have I done...
 
@@ -98,12 +102,9 @@ export function Select<T extends string | number>(props: ISelectProps<T>) {
       typeof props.value === "undefined" ? [] : [props.value]
   )
 
-  console.log("current selected values are:", selectedValues(), typeof props.value)
+  console.log("current selected values are:", selectedValues(), "that has the type of:", typeof props.value)
 
-  const [isOpen, setIsOpen] = createSignal(false)
-
-  const [optionsDisabled, setOptionsDisabled] = createSignal({} as SelectItemDisablingRule<T>)
-  const DEFAULT_ITEM_OPTIONS_STATE = optionsDisabled()
+  const [isOpened, setIsOpened] = createSignal(false)
 
   const isSelected = (item: T) => selectedValues().includes(item)
   const isItemDisabled = (item: T) => optionsDisabled()[item] ?? false
@@ -124,60 +125,80 @@ export function Select<T extends string | number>(props: ISelectProps<T>) {
     callOnInputEvent()
   }
 
-  const closeItemSelectPopover = () => setIsOpen(false)
+  const closeItemSelectPopover = () => {
+    console.log("closing select dialog")
+    setIsOpened(false)
+  }
+
+  const callOnInputEvent = () => {
+    props.onChange$(props.multiple$ ? selectedValues() : selectedValues()[0])
+  }
+
+  const computeDisablingRulesByRegistry = (
+    selectedItems: T[],
+    allOptions: T[],
+    registry = props.itemDisablingRuleRegistry$!
+  ): SelectItemDisablingRule<T> => {
+    if (!registry) {
+      return {} as SelectItemDisablingRule<T>
+    }
+    
+    const disabledMap = {} as SelectItemDisablingRule<T>
+    for (const item of allOptions) {
+      disabledMap[item] = false
+    }
+
+    if (!registry) return disabledMap
+    const selectedSet = new Set(selectedItems)
+
+    for (const rule of registry) {
+      const isIfIncluded = selectedSet.has(rule.ifInclude$)
+
+      // Forward rule: if selected -> disable targets
+      if (isIfIncluded) {
+        for (const target of rule.thenDisables$) {
+          disabledMap[target] = true
+        }
+      }
+
+      // Bidirectional rule (if target is selected -> disable ifInclude$)
+      const isAnyTargetSelected = rule.thenDisables$.some((target) => selectedSet.has(target))
+      if (isAnyTargetSelected) {
+        disabledMap[rule.ifInclude$] = true
+      }
+    }
+
+    console.log("computed disabling map:", disabledMap)
+
+    return disabledMap
+  }
+
+  const optionsDisabled = createMemo(() => {
+    return computeDisablingRulesByRegistry(
+      selectedValues(),
+      props.allOptions$,
+      props.itemDisablingRuleRegistry$
+    )
+  })
 
   const getItemSelectStateClasses = (item: T) => {
     const selectedClass = isSelected(item) ? select__itemSelected : select__itemNotSelected
     return isItemDisabled(item) ? select__itemDisabled : selectedClass
   }
 
-  const callOnInputEvent = () => {
-    props.onChange$(props.multiple$ ? selectedValues() : selectedValues()[0])
-
-    updateItemDisablingRule()
-  }
-
-  const updateItemDisablingRule = () => {
-    const newRule = props.onSelectingItem$?.(selectedValues(), optionsDisabled())
-    if (!newRule) {
-      return console.log("nothing to be applied for the disabling rule")
-    }
-
-    if (Object.keys(newRule).length === 0) {
-      setOptionsDisabled(() => DEFAULT_ITEM_OPTIONS_STATE)
-      return
-    }
-
-    console.assert(typeof newRule === "object", "returned item disabling rule is not an object")
-
-    setOptionsDisabled(it => ({ ...it, ...newRule }))
-  }
-
-  if (props.onSelectingItem$) {
-    // TODO: might need to use an Map<T, V> for this?
-    const optionDisabledMapping = {} as SelectItemDisablingRule<T>
-    for (const item of props.allOptions$) {
-      optionDisabledMapping[item] = false
-    }
-
-    setOptionsDisabled(_sometimestypescriptjustdumb => optionDisabledMapping)
-    updateItemDisablingRule()
-    console.log("<Select /> component has used item disabling rule, current state is:", optionsDisabled())
-  }
-
   return (
-    <Root open={isOpen()}>
+    <Root open={isOpened()}>
       <Anchor>
         <section class={select__root}>
           <Label>
             {props.label$}
           </Label>
-          <button class={select__content} onClick={() => setIsOpen(prev => !prev)}>
+          <button class={select__content} onClick={() => setIsOpened(prev => !prev)}>
             <Show when={props.displayTotalOnly$} fallback={
               <For each={selectedValues()} fallback={(
                 <span class={css`color: var(--subtext0);`}>Empty</span>
               )}>
-                {/* @ts-ignore */}
+                {/* @ts-ignore - already checked props.ItemSelectedComponent$ for undefined */}
                 {it => <props.ItemSelectedComponent$ item$={it} totalItems$={selectedValues().length} />}
               </For>
             }>
@@ -220,39 +241,4 @@ export function Select<T extends string | number>(props: ISelectProps<T>) {
       </Portal>
     </Root>
   )
-}
-
-export type IncompatibilityRuleRegistry<T extends string | number> = {
-  ifInclude$: T
-  thenDisables$: T[]
-  biDirectional$: boolean
-}[]
-
-export function computeDisablingRulesByRegistry<T extends string | number>(
-  selectedItems: T[],
-  disabledMapRef: SelectItemDisablingRule<T>,
-  rules: IncompatibilityRuleRegistry<T>,
-): SelectItemDisablingRule<T> {
-  const selectedSet = new Set(selectedItems)
-
-  for (const rule of rules) {
-    const isWhenSelected = selectedSet.has(rule.ifInclude$)
-
-    // Forward direction: 'when' is selected -> disable targets
-    if (isWhenSelected) {
-      for (const target of rule.thenDisables$) {
-        disabledMapRef[target] = true
-      }
-    } else {
-      // Reverse direction: if bidirectional, any selected target disables 'when'
-      const isAnyTargetSelected = rule.thenDisables$.some((target) => selectedSet.has(target))
-      if (isAnyTargetSelected) {
-        disabledMapRef[rule.ifInclude$] = true
-      }
-    }
-  }
-
-  console.log('computed disbaling map:', disabledMapRef)
-
-  return disabledMapRef
 }

@@ -2,7 +2,7 @@ import { css } from "molcss"
 import { Show } from "solid-js"
 import { BsInfoCircleFill } from "solid-icons/bs"
 // ...
-import { computeDisablingRulesByRegistry, DefaultTextListInput, type ISelectProps, ListInput, NumberInput, Select, SelectItemComponentProps, TabContent, TabHeader, TabRoot, Tag, Tooltip } from "../../../../../components"
+import { DefaultTextListInput, ListInput, NumberInput, Select, SelectItemComponentProps, TabContent, TabHeader, TabRoot, Tag, Tooltip } from "../../../../../components"
 import { useAddEntryDialog } from "./AddEntryDialogProvider"
 import { ALL_PROGRESS_TYPE, Progress, PROGRESS_TYPE_REGISTRY} from "../../../../../api"
 import { AnimeTrackerCategory, AnimeTrackerNote, SCORE_NOTE_DISABLING_RULE_REGISTRY, SCORE_NOTES_CATEGORY_MAPPING, SCORE_NOTES_REGISTRY } from "../../../api"
@@ -47,10 +47,6 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
         {getProgressText(itemProps.item$)}
       </Tag>
     )
-  }
-
-  const scoreNoteItemDisablingRule: ISelectProps<AnimeTrackerNote>["onSelectingItem$"] = (selectedItems, currentRule) => {
-    return computeDisablingRulesByRegistry(selectedItems, currentRule, SCORE_NOTE_DISABLING_RULE_REGISTRY)
   }
 
   return (
@@ -117,7 +113,7 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
         allOptions$={SCORE_NOTES_CATEGORY_MAPPING[props.category$]}
         label$="Score notes"
         popoverContentWidth$="60%"
-        onSelectingItem$={scoreNoteItemDisablingRule}
+        itemDisablingRuleRegistry$={SCORE_NOTE_DISABLING_RULE_REGISTRY}
         ItemComponent$={(itemProps) => {
           const registry = SCORE_NOTES_REGISTRY[itemProps.item$]
 
