@@ -4,7 +4,7 @@ import { API_URL } from "../api"
 import { useFetchStatus } from "./useFetchStatus"
 import { css } from "molcss"
 
-type CompatibleProgressTrackerData = {
+export type CompatibleProgressTrackerData = {
   id: string
   name: string
 }

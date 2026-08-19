@@ -3,7 +3,7 @@ import { ParentProps, Show } from "solid-js"
 import { BiSolidBlanket } from "solid-icons/bi"
 // ...
 import { Tooltip } from "../ui"
-import { type AnyProgressTrackerTableHandler, type ErrorStatus, FetchStatus } from "../../hook"
+import { type AnyProgressTrackerTableHandler, CompatibleProgressTrackerData, type ErrorStatus, FetchStatus, ProgressTrackerTableHandler } from "../../hook"
 import { SpinningCube } from "../loader"
 
 const placeholderView__root = css`
@@ -22,11 +22,13 @@ const placeholderView__textWrap = css`
   text-align: center;
 `
 
-interface IProgressTrackerPlaceholderViewProps {
-  handler$: AnyProgressTrackerTableHandler
+interface IProgressTrackerPlaceholderViewProps<T extends CompatibleProgressTrackerData> {
+  handler$: ProgressTrackerTableHandler<T>
 }
 
-export function ProgressTrackerPlaceholderView(props: ParentProps<IProgressTrackerPlaceholderViewProps>) {
+export function ProgressTrackerPlaceholderView<T extends CompatibleProgressTrackerData>(
+  props: ParentProps<IProgressTrackerPlaceholderViewProps<T>>
+) {
   const trackerContext = props.handler$
 
   const isEmpty = () => trackerContext.entriesData$().length == 0

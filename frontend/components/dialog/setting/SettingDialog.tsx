@@ -4,6 +4,7 @@ import "../../../assets/styles/scollbar.css"
 import { Button, IDialogContentProps, Label, Tooltip } from "../../ui"
 import { SettingDialogButtonSection, SettingDialogSwitchSection } from "./SettingComponents"
 import { ProgressTrackerUndeterministicScoreCell } from "../../common"
+import { AnimeScoreNotesList, AnimeTrackerNote } from "../../../features/anime"
 
 const dialog__content = css`
   width: 45rem;
@@ -77,12 +78,7 @@ export default function SettingDialog(props: IDialogContentProps) {
               <Tooltip label$={(
                 <>
                   <Label>Notes</Label>
-                  <ul class={css`padding-left: 15px;`}>
-                    <li>
-                      <b class="scoreNote_name">This is a one-shot</b>
-                      <p class="scoreNote_description">(.statement) - a one chapter story only, and usually a short story.</p>
-                    </li>
-                  </ul>
+                  <AnimeScoreNotesList scoreNotes={[AnimeTrackerNote.ONE_SHOT]} />
                 </>
               )}>
                 <a>[this note]</a>
