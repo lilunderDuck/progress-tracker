@@ -14,6 +14,10 @@ export interface IEntryIncludedScore<T extends number = number> {
   scoreNotes?: T[]
 }
 
+export interface IEntryIncludeProgress {
+  currentProgress?: Progress
+}
+
 export const API_URL = `http://localhost:34540/duck_api`
 export const HEARTBEAT_ROUTE = `${API_URL}/keep_duck_ritual_to_continue` as const
 export const OPEN_DATA_STORED_LOCATION_ROUTE = `${API_URL}/teleporter/open_saved_data_pocket`

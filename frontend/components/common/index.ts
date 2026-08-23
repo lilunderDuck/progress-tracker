@@ -1,3 +1,5 @@
 export * from "./ProgressTrackerProgress"
 export * from "./ProgressTrackerScoreCell"
 export * from "./ProgressTrackerPlaceholderView"
+export * from "./ProgressTrackerTotalEntryCount"
+export * from "./ProgressTrackerTableHeader"

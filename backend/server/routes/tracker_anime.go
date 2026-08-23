@@ -27,8 +27,6 @@ type ProgressEntryCategoryData struct {
 	ScoreNotes      []int    `json:"scoreNotes,omitempty"`
 }
 
-const ENTRY_DATABASE_FILENAME = "anime.db"
-
 func AnimeTrackerRoute() server.RouteCloseFn {
 	closeFn := trackers.CreateTrackerRoute[ProgressEntryData](
 		func(incomingData *ProgressEntryData) (entryId string, rawData string, anyError error) {
@@ -38,7 +36,7 @@ func AnimeTrackerRoute() server.RouteCloseFn {
 			return
 		},
 		trackers.CreateTrackerRouteOption{
-			Name:  "anime",
+			Name:       "anime",
 			DbFileName: "anime.db",
 		},
 	)

@@ -1,15 +1,13 @@
 import { TbArrowsRandom } from "solid-icons/tb"
 import { BsGearFill, BsPlus, BsX } from "solid-icons/bs"
 import { FaSolidUpRightAndDownLeftFromCenter } from "solid-icons/fa"
-import { createSignal, For, lazy, Show } from "solid-js"
-import { Portal } from "solid-js/web"
+import { Component, createSignal, For, lazy, Show } from "solid-js"
 // ...
 import { css } from "molcss"
 // ...
-import { Button, Dialog, Input, Tag, Tooltip } from "../../../components"
-import { SettingDialog } from "../../../components"
-import { useAnimeProgressTrackerContext } from "../provider"
-import { PROGRESS_PICK_RANDOM_WITH_SUBSET, PROGRESS_TYPE_REGISTRY } from "../../../api"
+import { Button, Dialog, IDialogContentProps, Input, Tag, Tooltip } from "../ui"
+import { ProgressTrackerTableHandler } from "../../hook"
+import { PROGRESS_PICK_RANDOM_WITH_SUBSET, PROGRESS_TYPE_REGISTRY } from "../../api"
 
 const tableHeader__root = css`
   width: 100%;
@@ -42,8 +40,17 @@ const tableHeader__pickRandomTooltipContent = css`
   flex-wrap: wrap;
 `
 
-export function AnimeProgressTrackerTableHeader() {
-  const { handler$ } = useAnimeProgressTrackerContext()
+type CompatibleContext = { handler$: ProgressTrackerTableHandler<any> }
+
+interface IProgressTrackerTableHeaderProps<T extends CompatibleContext> {
+  contextFn$(): T
+  AddEntryDialogComponent$: Component<IDialogContentProps>
+}
+
+export function ProgressTrackerTableHeader<T extends CompatibleContext>(props: IProgressTrackerTableHeaderProps<T>) {
+  console.assert(props.contextFn$() !== undefined, "undefined context!!")
+
+  const { handler$ } = props.contextFn$()
   let inputRef!: HTMLInputElement
 
   const [showResetButton, setShowResetButton] = createSignal(false)
@@ -81,7 +88,7 @@ export function AnimeProgressTrackerTableHeader() {
     setShowResetButton(true)
   }
 
-  const AddEntryDialog = lazy(() => import("./dialog/add-entry/AddEntryDialog"))
+  const SettingDialog = lazy(() => import("../dialog/setting/SettingDialog"))
 
   return (
     <header class={tableHeader__root}>
@@ -94,7 +101,7 @@ export function AnimeProgressTrackerTableHeader() {
       </Tooltip>
       <div />
       <Tooltip placement$="top" label$="Add entry">
-        <Dialog dialogContent$={AddEntryDialog}>
+        <Dialog dialogContent$={props.AddEntryDialogComponent$}>
           <Button type$="icon$">
             <BsPlus size={15} />
           </Button>

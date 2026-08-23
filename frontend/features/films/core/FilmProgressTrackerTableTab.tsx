@@ -1,18 +1,16 @@
-import { AnimeProgressTrackerProvider, useAnimeProgressTrackerContext } from "../provider"
+// import { FilmProgressTrackerTableHeader, AnimeTotalEntryCount } from "../components"
+import { FilmProgressTrackerProvider, useFilmProgressTrackerContext } from "../provider"
 import { ProgressTrackerPlaceholderView, ProgressTrackerTableHeader, ProgressTrackerTotalEntryCount } from "../../../components"
-import { lazy } from "solid-js"
 
-export default function AnimeProgressTrackerTableTab() {
-  const AddEntryDialog = lazy(() => import("../components/dialog/add-entry/AddEntryDialog"))
-
+export default function FilmProgressTrackerTableTab() {
   const Wrapper = () => {
-    const { handler$ } = useAnimeProgressTrackerContext()
+    const { handler$ } = useFilmProgressTrackerContext()
 
     return (
       <>
         <ProgressTrackerTableHeader 
-          AddEntryDialogComponent$={AddEntryDialog}
-          contextFn$={useAnimeProgressTrackerContext}
+          contextFn$={useFilmProgressTrackerContext}
+          AddEntryDialogComponent$={() => <></>}
         />
         <ProgressTrackerTotalEntryCount handler$={handler$} />
         <ProgressTrackerPlaceholderView handler$={handler$}>
@@ -25,8 +23,8 @@ export default function AnimeProgressTrackerTableTab() {
   }
 
   return (
-    <AnimeProgressTrackerProvider>
+    <FilmProgressTrackerProvider>
       <Wrapper />
-    </AnimeProgressTrackerProvider>
+    </FilmProgressTrackerProvider>
   )
 }
