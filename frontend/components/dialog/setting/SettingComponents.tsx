@@ -4,7 +4,7 @@ import { JSX } from "solid-js/jsx-runtime"
 import { css } from "molcss"
 // ...
 import { ISelectProps, Select, SwitchInput, Tooltip } from "../../ui"
-import { ISettingData, useSettingContext } from "../../../features/global"
+import { ISettingData, useGlobalContext } from "../../../features/global"
 
 const dialog__section = css`
   padding-inline: 10px;
@@ -44,7 +44,7 @@ interface ISettingDialogLineProps extends IBaseSettingProps {
 }
 
 export function SettingDialogSwitchSection(props: ParentProps<ISettingDialogLineProps>) {
-  const { setting$, updateSetting$ } = useSettingContext()
+  const { setting$, updateSetting$ } = useGlobalContext()
 
   return (
     <section class={`${dialog__section} ${dialog__switchSection} ${props.disabled$ ? "section__disabled" : "section__notDisabled"}`}>
@@ -137,7 +137,7 @@ interface ISettingDialogSelectSection<T extends string | number, U extends keyof
 }
 
 export function SettingDialogSelectSection<T extends string | number, U extends keyof ISettingData>(props: ISettingDialogSelectSection<T, U>) {
-  const { setting$, updateSetting$ } = useSettingContext()
+  const { setting$, updateSetting$ } = useGlobalContext()
 
   return (
     <section class={dialog__section}>

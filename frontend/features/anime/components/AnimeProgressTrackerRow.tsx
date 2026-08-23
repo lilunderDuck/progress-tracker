@@ -6,7 +6,7 @@ import "./AnimeProgressTrackerHead.css"
 import { BaseTableRowComponentProps } from "../../../hook"
 import { Dialog, ProgressTrackerProgressCell, ProgressTrackerScoreCell, ProgressTrackerUndeterministicScoreCell, Tooltip } from "../../../components"
 import AnimeScoreTooltipNote from "./AnimeScoreTooltipNote"
-import { useSettingContext } from "../../global"
+import { useGlobalContext } from "../../global"
 import { ALL_ANIME_CATEGORY_TYPES, AnimeTrackerEntry, AnimeTrackerNote } from "../api"
 
 const row__root = css`
@@ -48,7 +48,7 @@ interface IAnimeProgressTrackerRowProps extends BaseTableRowComponentProps<Anime
 }
 
 export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
-  const { setting$ } = useSettingContext()
+  const { setting$ } = useGlobalContext()
   const AddEntryDialog = lazy(() => import("./dialog/add-entry/AddEntryDialog"))
 
   const isScoreNoteNotAvaliable = (scoreNote: AnimeTrackerNote[]) => {

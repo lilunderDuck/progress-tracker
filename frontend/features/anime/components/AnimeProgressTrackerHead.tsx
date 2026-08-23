@@ -4,11 +4,11 @@ import { css } from "molcss"
 import "./AnimeProgressTrackerHead.css"
 // ...
 import { Tooltip } from "../../../components"
-import { useSettingContext } from "../../global"
+import { useGlobalContext } from "../../global"
 import { ALL_ANIME_CATEGORY_TYPES, ANIME_CATEGORY_REGISTRY } from "../api"
 
 export function AnimeProgressTrackerHead() {
-  const { setting$ } = useSettingContext()
+  const { setting$ } = useGlobalContext()
 
   return (
     <>

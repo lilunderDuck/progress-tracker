@@ -8,10 +8,10 @@ import "./assets/styles/scollbar.css"
 import "./debug_hook"
 
 import App from './App'
-import { SettingProvider } from './features/global'
+import { GlobalProvider } from './features/global'
 
 render(() => (
-  <SettingProvider>
+  <GlobalProvider>
     <App />
-  </SettingProvider>
+  </GlobalProvider>
 ), document.getElementById('root')!)

@@ -1,4 +1,4 @@
 export * from "./type"
-export * from "./SettingProvider"
+export * from "./GlobalProvider"
 export * from "./ProgressTrackerMenuDialog"
 export * from "./ProgressTrackerBottomBar"

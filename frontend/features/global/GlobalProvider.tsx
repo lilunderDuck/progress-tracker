@@ -1,4 +1,5 @@
 import { type Accessor, createContext, createSignal, type ParentProps, useContext } from "solid-js"
+// ...
 import { ColumnOrdering, ISettingData } from "./type"
 
 interface ISettingContext {
@@ -8,7 +9,7 @@ interface ISettingContext {
 
 const Context = createContext<ISettingContext>()
 
-export function SettingProvider(props: ParentProps) {
+export function GlobalProvider(props: ParentProps) {
   const [setting, setSetting] = createSignal<ISettingData>({
     hidePublicScores: false,
     columnOrder: ColumnOrdering.DEFAULT,
@@ -34,6 +35,6 @@ export function SettingProvider(props: ParentProps) {
   )
 }
 
-export function useSettingContext() {
+export function useGlobalContext() {
   return useContext(Context)!
 }
