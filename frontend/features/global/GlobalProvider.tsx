@@ -2,6 +2,7 @@ import { type Accessor, Component, createContext, createSignal, lazy, onMount, t
 // ...
 import { ColumnOrdering, type ISettingData, ProgressTrackerType, ServerStatus } from "./type"
 import { startHeartbeat } from "./heartbeat"
+import { usePersistedSignal } from "../../hook"
 
 interface ISettingContext {
   setting$: Accessor<ISettingData>
@@ -24,7 +25,7 @@ export function GlobalProvider(props: ParentProps) {
   })
   
   const [serverStatus, setServerStatus] = createSignal(ServerStatus.STARTING)
-  const [currentPage, setCurrentPage] = createSignal(ProgressTrackerType.ANIME)
+  const [currentPage, setCurrentPage] = usePersistedSignal(localStorage, 'progress_tracker_current_page', ProgressTrackerType.ANIME)
 
   const updateSetting: ISettingContext["updateSetting$"] = (key, value) => {
     switch (key) {
