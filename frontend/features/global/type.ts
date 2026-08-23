@@ -9,3 +9,9 @@ export interface ISettingData {
   anime_showUndeterministicScore: boolean
   __dummyDiscard__$: any
 }
+
+export const enum ProgressTrackerType {
+  ANIME,
+  FILM,
+  GAME
+}

@@ -26,8 +26,10 @@ func main() {
 	routes.AppAssetsRoute(publicFS)
 	routes.NativeRoute()
 	animeTrackerCleanUpFn := routes.AnimeTrackerRoute()
+	filmTrackerCleanUpFn := routes.FilmTrackerRoute()
 	routes.NewHeartbeat().RegisterRouteAndStart(func() {
 		animeTrackerCleanUpFn()
+		filmTrackerCleanUpFn()
 	})
 
 	if !flags.DEV_MODE {

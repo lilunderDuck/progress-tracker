@@ -1,7 +1,6 @@
-import { css } from "molcss"
-import AnimeProgressTrackerTableTab from "./features/anime"
-import { ProgressTrackerBottomBar, ProgressTrackerMenuDialog } from "./features/global"
-import { createSignal, Show } from "solid-js"
+import { For, lazy, Match, Switch } from "solid-js"
+// ...
+import { ProgressTrackerBottomBar, ProgressTrackerMenuDialog, ProgressTrackerType, useGlobalContext } from "./features/global"
 import { HEARTBEAT_ROUTE } from "./api"
 
 export default function App() {
@@ -17,6 +16,13 @@ export default function App() {
   //   console.log("heartbeat system is disabled in deverlopment mode, please manually start the server.")
   // }
 
+  const { currentPage$ } = useGlobalContext()
+
+  const PROGRESS_TRACKER_PAGES_REGISTRY = [
+    [ProgressTrackerType.ANIME, lazy(() => import("./features/anime"))],
+    [ProgressTrackerType.FILM, lazy(() => import("./features/films"))]
+  ] as const
+
   return (
     <>
       {/* <section class={css`display: flex; align-items: center; gap: 5px; flex-wrap: wrap;`}>
@@ -26,8 +32,17 @@ export default function App() {
           </Button>
         </Dialog>
       </section> */}
+
+      <Switch>
+        <For each={PROGRESS_TRACKER_PAGES_REGISTRY}>
+          {([currentPage, PageComponent]) => (
+            <Match when={currentPage === currentPage$()}>
+              <PageComponent />
+            </Match>
+          )}
+        </For>
+      </Switch>
       
-      <AnimeProgressTrackerTableTab />
       <ProgressTrackerBottomBar>
         {/* <Show when={serverNotAliveIndicator()}>
           <div class={css`
