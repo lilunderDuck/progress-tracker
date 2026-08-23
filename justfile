@@ -10,6 +10,13 @@ build:
 build_debug:
 	go build -tags=TOAST_DEBUG -o {{OUTPUT_PATH}}/{{EXE_NAME}}.exe {{GO_BUILD_DEBUG_FRAGS}} main.go
 	{{OUTPUT_PATH}}/{{EXE_NAME}}.exe
+
 start_dev_server:
 	go build -tags=TOAST_DEBUG,TOAST_DEV_MODE -o {{OUTPUT_PATH}}/{{EXE_NAME}}_dev.exe {{GO_BUILD_DEBUG_FRAGS}} main.go
 	{{OUTPUT_PATH}}/{{EXE_NAME}}_dev.exe
+
+start_dev_frontend:
+	bun run dev
+
+[parallel]
+start_dev: start_dev_frontend start_dev_server

@@ -18,7 +18,7 @@ export function FilmProgressTrackerProvider(props: ParentProps) {
     Progress.PLANNING
   ]
 
-  const handler = createProgressTrackerTable<IFilmTrackerEntry>("anime", {
+  const handler = createProgressTrackerTable<IFilmTrackerEntry>("film", {
     TableHeadComponent$: FilmProgressTrackerHead,
     TableRowComponent$: FilmProgressTrackerRow,
     filterEntryByName$(name, entries) {

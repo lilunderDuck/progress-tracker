@@ -15,3 +15,9 @@ export const enum ProgressTrackerType {
   FILM,
   GAME
 }
+
+export const enum ServerStatus {
+  STARTING,
+  ALIVE,
+  DEAD
+}
