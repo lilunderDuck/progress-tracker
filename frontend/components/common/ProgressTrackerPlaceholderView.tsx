@@ -41,9 +41,7 @@ export function ProgressTrackerPlaceholderView<T extends CompatibleProgressTrack
             <BiSolidBlanket size={80} />
           </div>
           <span class={placeholderView__textWrap}>
-            There's no entries here... <Tooltip anchorClass$={css`display: inline-block;`} label$="Click to refresh">
-              <a href="/">"Uhh- I think it not suppose to be empty?"</a>
-            </Tooltip>
+            There's no entries here... Try creating some entry I guess?
           </span>
         </div>
       </Show>
