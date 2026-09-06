@@ -20,4 +20,8 @@ export interface IEntryIncludeProgress {
 
 export const API_URL = `http://localhost:34540/duck_api`
 export const HEARTBEAT_ROUTE = `${API_URL}/keep_duck_ritual_to_continue` as const
-export const OPEN_DATA_STORED_LOCATION_ROUTE = `${API_URL}/teleporter/open_saved_data_pocket`
+export const OPEN_DATA_STORED_LOCATION_ROUTE = `${API_URL}/teleporter/saved_data_pocket`
+
+export async function openSavedDataLocation() {
+  await fetch(OPEN_DATA_STORED_LOCATION_ROUTE)
+}

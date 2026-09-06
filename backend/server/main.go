@@ -36,7 +36,7 @@ func ResponseInText(res http.ResponseWriter, statusCode int, data string) {
 	res.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	res.Write([]byte(data))
 	if flags.DEBUG_MODE {
-		debug.InfoLabelf("server", "response with: %s - %s", debug.FormatNumber(statusCode), fmt.Sprintf("%.30s", data))
+		debug.InfoLabelf("server", "response with: %s - %s", debug.FormatNumber(statusCode), fmt.Sprintf("%.70s", data))
 	}
 }
 

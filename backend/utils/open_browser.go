@@ -38,12 +38,15 @@ func OpenBrowser(openDelayInMs int, url string) {
 }
 
 func OpenExplorer(path string) error {
+	if flags.DEV_MODE {
+		debug.InfoLabelf("explorer", "opening %s", debug.FormatPath(path))
+	}
 	var cmd *exec.Cmd
 
 	switch runtime.GOOS {
 	case "windows":
 		// Opens Windows Explorer highlighting the file/folder
-		cmd = exec.Command("explorer", "/select,", path)
+		cmd = exec.Command("powershell", "ii", path)
 	case "darwin":
 		// Opens macOS Finder revealing the file/folder
 		cmd = exec.Command("open", "-R", path)

@@ -5,6 +5,7 @@ import { Button, IDialogContentProps, Label, Tooltip } from "../../ui"
 import { SettingDialogButtonSection, SettingDialogSwitchSection } from "./SettingComponents"
 import { ProgressTrackerUndeterministicScoreCell } from "../../common"
 import { AnimeScoreNotesList, AnimeTrackerNote } from "../../../features/anime"
+import { openSavedDataLocation } from "../../../api"
 
 const dialog__content = css`
   width: 45rem;
@@ -61,7 +62,7 @@ export default function SettingDialog(props: IDialogContentProps) {
           name$={"\"Where's this tracker list saved data?\""}
           description$="Take me to the tracker list saved data location!"
         >
-          <Button>
+          <Button onClick={openSavedDataLocation}>
             Show it on file explorer
           </Button>
         </SettingDialogButtonSection>
