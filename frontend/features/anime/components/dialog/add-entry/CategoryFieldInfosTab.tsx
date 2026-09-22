@@ -52,7 +52,7 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
   return (
     <>
       <div class={css`display: flex; align-items: center; gap: 10px;`}>
-        <div class={css`flex-basis: 40%;`}>
+        <div class={css`flex-basis: 60%;`}>
           <Select 
             {...retainer$.retain$(
               `category.${props.category$}.currentProgress`,
@@ -67,18 +67,7 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
           />
         </div>
 
-        <div class={css`flex-basis: 30%;`}>
-          <NumberInput 
-            {...retainer$.retain$('personalRating', initialData$?.personalRating)}
-            label="Personal rating"
-            placeholder="Your score"
-            min={0}
-            max={10}
-            required
-          />
-        </div>
-
-        <div class={css`flex-basis: 30%;`}>
+        <div class={css`flex-basis: 40%;`}>
           <NumberInput 
             {...retainer$.retain$(
               `category.${props.category$}.score`,

@@ -1,5 +1,5 @@
 import { useAddEntryDialog } from "./AddEntryDialogProvider"
-import { TextInput } from "../../../../../components"
+import { NumberInput, TextInput } from "../../../../../components"
 
 export default function EntryBasicInfoFieldsTab() {
   const { retainer$, initialData$ } = useAddEntryDialog()
@@ -10,6 +10,15 @@ export default function EntryBasicInfoFieldsTab() {
         {...retainer$.retain$('name', initialData$?.name)}
         label="Name"
         placeholder="Anime/manga/light novel name"
+        required
+      />
+
+      <NumberInput 
+        {...retainer$.retain$('personalRating', initialData$?.personalRating)}
+        label="Personal rating"
+        placeholder="Your score"
+        min={0}
+        max={10}
         required
       />
 
