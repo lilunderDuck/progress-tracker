@@ -1,7 +1,7 @@
 @font-face {
-  font-family: ZeroProtoNerdFont;
+  font-family: SourGummy;
   font-display: swap;
-  src: url("../ComicRelief-Bold.woff2") format('woff2');
+  src: url("../SourGummy.woff2") format('woff2');
 }
 
 /* The follow CSS reset was take from https://www.joshwcomeau.com/css/custom-css-reset/, thank! */
@@ -37,7 +37,7 @@
   color: var(--text);
 
   color-scheme: dark !important;
-  font-family: ZeroProtoNerdFont, Arial, Helvetica, sans-serif;
+  font-family: SourGummy, Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-synthesis: none;
   /* Improve text rendering */
