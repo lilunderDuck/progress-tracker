@@ -1,4 +1,4 @@
-import { type JSX, type ParentProps } from "solid-js"
+import { type JSX } from "solid-js"
 // ...
 import { css } from "molcss"
 // ...
@@ -32,22 +32,6 @@ interface IProgressTrackerScoreCellProps<T extends number> extends IEntryInclude
 }
 
 export function ProgressTrackerScoreCell<T extends number>(props: IProgressTrackerScoreCellProps<T>) {
-  const shouldNotDisplayTooltip = () => 
-    // there's no provided scores and score notes
-    (!props.scoreSrc && !props.scoreNotes) || 
-    // or provided scores and score notes left empty
-    (props.scoreSrc?.length == 0 && props.scoreNotes?.length == 0)
-  // ...
-
-  const TooltipWrapper = (thisProps: ParentProps) => shouldNotDisplayTooltip() ? 
-    <>{thisProps.children}</> :
-    <Tooltip outlineColor$={getScoreColor()} placement$="right" label$={(
-      props.tooltipContent$
-    )}>
-      {thisProps.children}
-    </Tooltip>
-  // ...
-
   const getScoreColor = () => getScoreBackgroundColor(
     props.isScoreNotAvaliable$(props.scoreNotes ?? []) ? -1 : props.score
   )
@@ -59,14 +43,12 @@ export function ProgressTrackerScoreCell<T extends number>(props: IProgressTrack
 
   return (
     <td class={props.class ?? ""}>
-      <TooltipWrapper>
-        <div
-          class={`${tableRow__score} ${getTextColor()} ${shouldNotDisplayTooltip() ? "" : tableRow__notesIndicator}`}
-          style={`background-color:${getScoreColor()}`}
-        >
-          {props.isScoreNotAvaliable$(props.scoreNotes ?? []) ? "N/A" : props.score}
-        </div>
-      </TooltipWrapper>
+      <div
+        class={`${tableRow__score} ${getTextColor()}`}
+        style={`background-color:${getScoreColor()}`}
+      >
+        {props.isScoreNotAvaliable$(props.scoreNotes ?? []) ? "N/A" : props.score}
+      </div>
     </td>
   )
 }

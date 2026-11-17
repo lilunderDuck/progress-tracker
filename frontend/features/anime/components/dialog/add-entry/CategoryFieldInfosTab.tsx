@@ -52,7 +52,7 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
   return (
     <>
       <div class={css`display: flex; align-items: center; gap: 10px;`}>
-        <div class={css`flex-basis: 60%;`}>
+        <div class={css`flex-basis: 100%;`}>
           <Select 
             {...retainer$.retain$(
               `category.${props.category$}.currentProgress`,
@@ -61,65 +61,12 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
             multiple$={false}
             allOptions$={ALL_PROGRESS_TYPE}
             label$="Current progress"
-            popoverContentWidth$="28%"
+            popoverContentWidth$="60%"
             ItemComponent$={ItemComponent}
             ItemSelectedComponent$={ItemComponent}
           />
         </div>
-
-        <div class={css`flex-basis: 40%;`}>
-          <NumberInput 
-            {...retainer$.retain$(
-              `category.${props.category$}.score`,
-              initialData$?.category[props.category$]?.score
-            )}
-            label="Public score rating"
-            placeholder="Public score/average score (between 0 and 10)"
-            min={0}
-            max={10}
-            required
-          />
-        </div>
       </div>
-      
-      <ListInput 
-        {...retainer$.retain$(
-          `category.${props.category$}.scoreSrc`,
-          initialData$?.category[props.category$]?.scoreSrc
-        )}
-        label="Provided sources"
-        inputComponent$={DefaultTextListInput}
-        inputPlaceholder$="MAL, mangadex or any valid url here"
-      />
-      
-      <Select<AnimeTrackerNote>
-        {...retainer$.retain$(
-          `category.${props.category$}.scoreNotes`,
-          initialData$?.category[props.category$]?.scoreNotes
-        )}
-        multiple$={true}
-        displayTotalOnly$={true}
-        allOptions$={SCORE_NOTES_CATEGORY_MAPPING[props.category$]}
-        label$="Score notes"
-        popoverContentWidth$="60%"
-        itemDisablingRuleRegistry$={SCORE_NOTE_DISABLING_RULE_REGISTRY}
-        ItemComponent$={(itemProps) => {
-          const registry = SCORE_NOTES_REGISTRY[itemProps.item$]
-
-          return (
-            <>
-              <div class={css`width: 100%;`}>
-                {registry.name$}
-              </div>
-              <Show when={registry?.note$}>
-                <Tooltip label$={registry.note$}>
-                  <BsInfoCircleFill />
-                </Tooltip>
-              </Show>
-            </>
-          )
-        }}
-      />
     </>
   )
 }

@@ -21,10 +21,7 @@ type ProgressEntryCategory struct {
 }
 
 type ProgressEntryCategoryData struct {
-	CurrentProgress int      `json:"currentProgress,omitempty"`
-	Score           float64  `json:"score,omitempty"`
-	ScoreSrc        []string `json:"scoreSrc,omitempty"`
-	ScoreNotes      []int    `json:"scoreNotes,omitempty"`
+	CurrentProgress int `json:"currentProgress,omitempty"`
 }
 
 func AnimeTrackerRoute() server.RouteCloseFn {

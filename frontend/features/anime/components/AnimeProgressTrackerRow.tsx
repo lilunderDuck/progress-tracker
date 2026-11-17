@@ -76,23 +76,6 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
         </Dialog>
       </td>
 
-      <Show when={!setting$().hidePublicScores}>
-        <For each={ALL_ANIME_CATEGORY_TYPES}>
-          {type => {
-            const categoryData = () => props.category[type]
-            
-            return (
-              <ProgressTrackerScoreCell
-                {...categoryData()}
-                class={`${type == "anime" ? "table__extraLeftPadding" : undefined}`}
-                tooltipContent$={<AnimeScoreTooltipNote {...categoryData()} />}
-                isScoreNotAvaliable$={isScoreNoteNotAvaliable}
-              />
-            )
-          }}
-        </For>
-      </Show>
-
       <For each={ALL_ANIME_CATEGORY_TYPES}>
         {type => (
           <ProgressTrackerProgressCell

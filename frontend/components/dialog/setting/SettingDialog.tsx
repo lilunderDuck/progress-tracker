@@ -53,11 +53,6 @@ export default function SettingDialog(props: IDialogContentProps) {
           disabled$={true}
           inputTooltip$="You shouldn't"
         />
-        <SettingDialogSwitchSection 
-          name$="Hide public scores column"
-          description$={<i>You know what this does</i>}
-          key$="hidePublicScores"
-        />
         <SettingDialogButtonSection 
           name$={"\"Where's this tracker list saved data?\""}
           description$="Take me to the tracker list saved data location!"

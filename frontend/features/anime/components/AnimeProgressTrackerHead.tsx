@@ -14,9 +14,6 @@ export function AnimeProgressTrackerHead() {
     <>
       <tr>
         <th scope="colgroup" colspan="1"></th>
-        <Show when={!setting$().hidePublicScores}>
-          <th scope="colgroup" colspan="3">Public scores</th>
-        </Show>
         <th scope="colgroup" colspan="3">Progress</th>
         <th scope="colgroup" colspan="1" class="table__extraLeftPadding">Rating</th>
         <th scope="colgroup" colspan="1" class="table__extraLeftPadding"></th>
@@ -25,21 +22,6 @@ export function AnimeProgressTrackerHead() {
         <th scope="col" class={`table__extraLeftPadding ${css`width:250px;`}`}>
           Name
         </th>
-
-        <Show when={!setting$().hidePublicScores}>
-          <For each={ALL_ANIME_CATEGORY_TYPES}>
-            {it => {
-              const registry = ANIME_CATEGORY_REGISTRY[it]
-              return (
-                <th scope="col">
-                  <Tooltip label$={`${registry.name$} progress`}>
-                    {registry.shortenedName$}
-                  </Tooltip>
-                </th>
-              )
-            }}
-          </For>
-        </Show>
 
         <For each={ALL_ANIME_CATEGORY_TYPES}>
           {it => {
