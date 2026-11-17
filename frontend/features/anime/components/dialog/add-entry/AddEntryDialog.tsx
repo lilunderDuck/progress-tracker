@@ -37,7 +37,7 @@ export default function AddEntryDialog(props: IAddEntryDialogProps) {
 
         <TabRoot pages$={[
           { name$: "Basic info", Page$: EntryBasicInfoFieldsTab },
-          { name$: "Scores & Progress", Page$: CategoryFieldInfosTab },
+          { name$: "Progress", Page$: CategoryFieldInfosTab },
         ]}> 
           <TabHeader tabButtonClass$={css`width: 100%;`} />
 

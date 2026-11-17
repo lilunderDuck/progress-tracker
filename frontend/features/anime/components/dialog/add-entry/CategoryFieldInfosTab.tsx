@@ -1,26 +1,16 @@
-import { css } from "molcss"
-import { Show } from "solid-js"
-import { BsInfoCircleFill } from "solid-icons/bs"
-// ...
-import { DefaultTextListInput, ListInput, NumberInput, Select, SelectItemComponentProps, TabContent, TabHeader, TabRoot, Tag, Tooltip } from "../../../../../components"
+import { Select, SelectItemComponentProps, Tag } from "../../../../../components"
 import { useAddEntryDialog } from "./AddEntryDialogProvider"
 import { ALL_PROGRESS_TYPE, Progress, PROGRESS_TYPE_REGISTRY} from "../../../../../api"
-import { AnimeTrackerCategory, AnimeTrackerNote, SCORE_NOTE_DISABLING_RULE_REGISTRY, SCORE_NOTES_CATEGORY_MAPPING, SCORE_NOTES_REGISTRY } from "../../../api"
+import { AnimeTrackerCategory } from "../../../api"
+import { CATEGORY_REGISTRY } from "../../../../../../bin/provider"
 
 export default function CategoryFieldInfosTab() {
   return (
-    <TabRoot pages$={[
-      { name$: "Anime", Page$: () => <CategoryFieldTab category$="anime" /> },
-      { name$: "Manga", Page$: () => <CategoryFieldTab category$="manga" /> },
-      { name$: "(Light) novel", Page$: () => <CategoryFieldTab category$="light_novel" /> },
-    ]}>
-      <TabHeader 
-        tabButtonClass$={css`width: 100%;`} 
-        tabFocusColor$="var(--peach)"
-        tabFocusRingColor$="var(--peach)"
-      />
-      <TabContent />
-    </TabRoot>
+    <>
+      <CategoryFieldTab category$="anime" />
+      <CategoryFieldTab category$="manga" />
+      <CategoryFieldTab category$="light_novel" />
+    </>
   )
 }
 
@@ -49,24 +39,20 @@ function CategoryFieldTab(props: { category$: AnimeTrackerCategory }) {
     )
   }
 
+  const displayName = CATEGORY_REGISTRY[props.category$].name$
+
   return (
-    <>
-      <div class={css`display: flex; align-items: center; gap: 10px;`}>
-        <div class={css`flex-basis: 100%;`}>
-          <Select 
-            {...retainer$.retain$(
-              `category.${props.category$}.currentProgress`,
-              initialData$?.category[props.category$]?.currentProgress
-            )}
-            multiple$={false}
-            allOptions$={ALL_PROGRESS_TYPE}
-            label$="Current progress"
-            popoverContentWidth$="60%"
-            ItemComponent$={ItemComponent}
-            ItemSelectedComponent$={ItemComponent}
-          />
-        </div>
-      </div>
-    </>
+    <Select 
+      {...retainer$.retain$(
+        `category.${props.category$}.currentProgress`,
+        initialData$?.category[props.category$]?.currentProgress
+      )}
+      multiple$={false}
+      allOptions$={ALL_PROGRESS_TYPE}
+      label$={`${displayName} progress`}
+      popoverContentWidth$="60%"
+      ItemComponent$={ItemComponent}
+      ItemSelectedComponent$={ItemComponent}
+    />
   )
 }
