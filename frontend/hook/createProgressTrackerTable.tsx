@@ -185,16 +185,8 @@ export function createProgressTrackerTable<T extends CompatibleProgressTrackerDa
 
   const TableRoot = (props: ParentProps) => (
     <div class={`${progressTracker__root} scrollbar scrollbar__vertical scrollbar__invs`}>
-      {props.children}
       <options.TableHeadComponent$ />
-      {/* <table class={progressTracker__table}>
-        <thead class={progressTracker__tableHead}>
-          <options.TableHeadComponent$ />
-        </thead>
-        <tbody>
-          
-        </tbody>
-      </table> */}
+      {props.children}
     </div>
   )
 
