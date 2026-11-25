@@ -12,6 +12,7 @@ export function AnimeProgressTrackerHead() {
 
   return (
     <>
+      <div>Progress</div>
       <tr>
         <th scope="colgroup" colspan="1"></th>
         <th scope="colgroup" colspan="3">Progress</th>

@@ -5,11 +5,12 @@ import "./AnimeProgressTrackerHead.css"
 // ...
 import { BaseTableRowComponentProps } from "../../../hook"
 import { Dialog, ProgressTrackerProgressCell, ProgressTrackerScoreCell, ProgressTrackerUndeterministicScoreCell, Tooltip } from "../../../components"
-import AnimeScoreTooltipNote from "./AnimeScoreTooltipNote"
 import { useGlobalContext } from "../../global"
 import { ALL_ANIME_CATEGORY_TYPES, AnimeTrackerEntry, AnimeTrackerNote } from "../api"
 
 const row__root = css`
+  display: flex;
+  gap: 5px;
   & .entry__editButton {
     opacity: 0;
   }
@@ -29,6 +30,13 @@ const row__notes = css`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  width: 100%;
+`
+
+const row__nameWrap = css`
+  & > div {
+    width: 250px;
+  }
 `
 
 const row__name = css`
@@ -61,8 +69,8 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
   }
 
   return (
-    <tr class={row__root} id={`entry_${props.rowIndex$}`}>
-      <td class="table__extraLeftPadding">
+    <div class={row__root} id={`entry_${props.rowIndex$}`}>
+      <div class={`table__extraLeftPadding ${row__nameWrap}`}>
         <Dialog
           dialogContent$={(dialogProps) => (
             <AddEntryDialog {...dialogProps} initialData$={props} />
@@ -74,7 +82,7 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
             </p>
           </Tooltip>
         </Dialog>
-      </td>
+      </div>
 
       <For each={ALL_ANIME_CATEGORY_TYPES}>
         {type => (
@@ -97,11 +105,11 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
         <ProgressTrackerUndeterministicScoreCell class={`${row__personalRatingScoreCell} table__extraLeftPadding`} />
       </Show>
 
-      <td class="table__extraLeftPadding">
+      <div class="table__extraLeftPadding">
         <p class={row__notes}>
           {props.notes}
         </p>
-      </td>
-    </tr>
+      </div>
+    </div>
   )
 }

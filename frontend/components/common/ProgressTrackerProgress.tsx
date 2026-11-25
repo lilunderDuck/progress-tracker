@@ -38,13 +38,13 @@ export function ProgressTrackerProgressCell(props: {
   }
 
   return (
-    <td class={props.class}>
+    <div class={props.class}>
       <div 
         style={`--progress-tag-color:${PROGRESS_TYPE_REGISTRY[currentProgress()].color$}`}
         class={progress__tag}
       >
         {displayedProgressName()}
       </div>
-    </td>
+    </div>
   )
 }
