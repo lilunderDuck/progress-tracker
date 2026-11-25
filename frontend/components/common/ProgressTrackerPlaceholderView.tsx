@@ -3,7 +3,7 @@ import { ParentProps, Show } from "solid-js"
 import { BiSolidBlanket } from "solid-icons/bi"
 // ...
 import { Tooltip } from "../ui"
-import { type AnyProgressTrackerTableHandler, CompatibleProgressTrackerData, type ErrorStatus, FetchStatus, ProgressTrackerTableHandler } from "../../hook"
+import { CompatibleProgressTrackerData, type ErrorStatus, FetchStatus, ProgressTrackerTableHandler } from "../../hook"
 import { SpinningCube } from "../loader"
 
 const placeholderView__root = css`

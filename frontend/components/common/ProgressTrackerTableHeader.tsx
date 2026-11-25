@@ -5,7 +5,7 @@ import { Component, createSignal, For, lazy, Show } from "solid-js"
 // ...
 import { css } from "molcss"
 // ...
-import { Button, Dialog, IDialogContentProps, Input, Tag, Tooltip } from "../ui"
+import { allowFocusRing, Button, Dialog, IDialogContentProps, Input, Spacer, Tag, Tooltip } from "../ui"
 import { ProgressTrackerTableHandler } from "../../hook"
 import { PROGRESS_PICK_RANDOM_WITH_SUBSET, PROGRESS_TYPE_REGISTRY } from "../../api"
 
@@ -39,6 +39,8 @@ const tableHeader__pickRandomTooltipContent = css`
   gap: 5px;
   flex-wrap: wrap;
 `
+
+const tableHeader__searchInput = css`width: 40%;`
 
 type CompatibleContext = { handler$: ProgressTrackerTableHandler<any> }
 
@@ -125,19 +127,24 @@ export function ProgressTrackerTableHeader<T extends CompatibleContext>(props: I
           <FaSolidUpRightAndDownLeftFromCenter />
         </Button>
       </Tooltip>
+      <Spacer />
       <Input 
         placeholder="Search by name"
         ref={inputRef}
+        class={`${tableHeader__searchInput} ${allowFocusRing}`}
         id="the_night_is_young"
         onInput={searchEntry}
       />
       <Show when={showResetButton()}>
         <Tooltip label$="Discard search">
-          <Button type$="icon$" class={tableHeader__button} onClick={discardSearching}>
+          <Button type$="icon$" class={`${tableHeader__button} ${allowFocusRing}`} onClick={discardSearching}>
             <BsX />
           </Button>
         </Tooltip>
       </Show>
+      <Spacer />
+      {/* HARDCODED VALUE HERE!! just the width of the stuff on the left side (include flex gap) */}
+      <div class={css`width: 152px;`} />
     </header>
   )
 }

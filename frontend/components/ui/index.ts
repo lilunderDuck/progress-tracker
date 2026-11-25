@@ -6,5 +6,7 @@ export * from "./Button"
 export * from "./Label"
 export * from "./KeyIndicator"
 export * from "./InlineInputField"
+export * from "./Flex"
+export * from "./style"
 // ...
 export * from "./input"
