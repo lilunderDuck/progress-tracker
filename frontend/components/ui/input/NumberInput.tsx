@@ -5,6 +5,7 @@ import { Label } from "../Label"
 import { Button } from "../Button"
 import { BsX } from "solid-icons/bs"
 import { Ref } from "../../../utils"
+import { allowFocusRing } from "../style"
 
 const input__inputSection = css`
   padding-bottom: 10px;
@@ -63,7 +64,7 @@ export function NumberInput(props: NumberInputProps) {
             if (isNaN(value)) return
             props.onChange$?.(value)
           }}
-          class={input__input}
+          class={`${input__input} ${allowFocusRing}`}
           type="number"
           spellcheck={false}
           autocomplete="off"

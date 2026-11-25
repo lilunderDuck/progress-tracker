@@ -13,6 +13,7 @@ const button = css`
   color: var(--button-text-color);
   user-select: none;
   background-color: var(--button-background-color);
+  outline: 4px solid transparent;
   &:not(:disabled):hover {
     background-color: var(--button-hover-background-color);
     color: var(--button-hover-text-color);
@@ -20,6 +21,10 @@ const button = css`
 
   &:disabled {
     opacity: 0.6;
+  }
+
+  &:not(:disabled):focus-visible {
+    outline-color: var(--button-hover-background-color);
   }
 `
 
@@ -38,7 +43,7 @@ const BUTTON_VARIANT_MAPPING = {
   default$: ["var(--surface0)", "var(--surface2)", "var(--overlay2)", "var(--text)"],
   secondary$: ["var(--sky)", "var(--sapphire)", "var(--surface0)", "var(--crust)"],
   danger$: ["var(--maroon)", "var(--red)", "var(--surface0)", "var(--crust)"],
-  warning$: ["var(--yellow)", "var(--peach)", "var(--surface0)", "var(--crust)"]
+  warning$: ["var(--yellow)", "var(--peach)", "var(--surface0)", "var(--crust)"],
 }
 
 interface IButtonProps extends JSX.ButtonHTMLAttributes<HTMLButtonElement> {

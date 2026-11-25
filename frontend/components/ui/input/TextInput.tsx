@@ -2,6 +2,7 @@ import { css } from "molcss"
 import { JSX, Show, splitProps } from "solid-js"
 import { BaseOnChangeHandler } from "../../../hook"
 import { Label } from "../Label"
+import { allowFocusRing } from "../style"
 
 const input__inputSection = css`
   padding-bottom: 10px;
@@ -49,7 +50,7 @@ export function TextInput<Multiline extends boolean = false>(props: TextInputPro
         // @ts-ignore
         <input
           {...inputProps}
-          class={input__input}
+          class={`${input__input} ${allowFocusRing}`}
           type="text"
           spellcheck={false}
           autocomplete="off"
@@ -61,7 +62,7 @@ export function TextInput<Multiline extends boolean = false>(props: TextInputPro
         <textarea
           {...inputProps}
           spellcheck={false}
-          class={input__input}
+          class={`${input__input} ${allowFocusRing}`}
           id={INPUT_ID}
           onInput={inputHandler}
         />
