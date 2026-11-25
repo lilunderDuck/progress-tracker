@@ -25,14 +25,17 @@ const row__personalRatingScoreCell = css`
 `
 
 const row__notes = css`
-  height: 27px;
-  padding-inline: 5px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   width: 100%;
   flex: 1;
-  user-select: none;
+  overflow: hidden;
+  width: 100%;
+  & p {
+    padding-inline: 5px;
+    user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `
 
 const row__nameWrap = css`
@@ -107,10 +110,10 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
         <ProgressTrackerUndeterministicScoreCell class={`${row__personalRatingScoreCell} table__extraLeftPadding`} />
       </Show>
 
-      <Tooltip label$={props.notes} anchorClass$={css`width: fit-content;`}>
-        <div class={`table__extraLeftPadding ${row__notes}`}>
+      <Tooltip label$={props.notes} anchorClass$={row__notes}>
+        <p class={`table__extraLeftPadding`}>
           {props.notes}
-        </div>
+        </p>
       </Tooltip>
     </div>
   )
