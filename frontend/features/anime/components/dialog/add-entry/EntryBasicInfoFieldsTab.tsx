@@ -2,7 +2,7 @@ import { useAddEntryDialog } from "./AddEntryDialogProvider"
 import { NumberInput, TextInput } from "../../../../../components"
 
 export default function EntryBasicInfoFieldsTab() {
-  const { retainer$, initialData$ } = useAddEntryDialog()
+  const { retainer$, initialData$, NameInput$ } = useAddEntryDialog()
 
   return (
     <>

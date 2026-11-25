@@ -1,4 +1,5 @@
 export * from "./createFormValueRetainer"
 export * from "./createProgressTrackerTable"
+export * from "./createInput"
 export * from "./usePersistedSignal"
 export * from "./useFetchStatus"

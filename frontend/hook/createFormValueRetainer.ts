@@ -1,3 +1,5 @@
+import { Component } from "solid-js"
+
 type Primitive = string | number | boolean | bigint | symbol | undefined | null
 
 /**Helper type to determine the path for a specific property value. */

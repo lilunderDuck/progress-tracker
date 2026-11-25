@@ -1,0 +1,9 @@
+{
+  "title": "Did I even watch/read this?",
+  "id": "toast-progress-tracker-list",
+  "description": "Fancy progress tracker list, not powered by Microsoft Excel or Google Sheet.",
+  "type": "private",
+  "status": "paused",
+  "icon": "[USE_PARENT_ICON]",
+  "repoUrl": "https://github.com/lilunderDuck/progress-tracker"
+}

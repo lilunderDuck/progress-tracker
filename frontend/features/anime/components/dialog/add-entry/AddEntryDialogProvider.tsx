@@ -1,6 +1,6 @@
-import { createContext, type ParentProps, useContext } from "solid-js"
+import { Component, createContext, type ParentProps, useContext } from "solid-js"
 // ...
-import { createFormValueRetainer, FormValueRetainer } from "../../../../../hook"
+import { createFormValueRetainer, FormValueRetainer, InputWrapHandler } from "../../../../../hook"
 import { useAnimeProgressTrackerContext } from "../../../provider"
 import { ALL_ANIME_CATEGORY_TYPES, AnimeTrackerEntry } from "../../../api"
 
@@ -8,6 +8,7 @@ interface IAddEntryDialogContext {
   retainer$: FormValueRetainer<AnimeTrackerEntry>
   validateAndSubmit$(): void
   initialData$?: AnimeTrackerEntry
+  NameInput$: InputWrapHandler<string>
 }
 
 const Context = createContext<IAddEntryDialogContext>()
