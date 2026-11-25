@@ -29,7 +29,7 @@ const row__notes = css`
   flex: 1;
   overflow: hidden;
   width: 100%;
-  & p {
+  & [data-corvu-tooltip-trigger] {
     padding-inline: 5px;
     user-select: none;
     overflow: hidden;
@@ -110,11 +110,11 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
         <ProgressTrackerUndeterministicScoreCell class={`${row__personalRatingScoreCell} table__extraLeftPadding`} />
       </Show>
 
-      <Tooltip label$={props.notes} anchorClass$={row__notes}>
-        <p class={`table__extraLeftPadding`}>
+      <div class={`${row__notes} table__extraLeftPadding`}>
+        <Tooltip label$={props.notes}>
           {props.notes}
-        </p>
-      </Tooltip>
+        </Tooltip>
+      </div>
     </div>
   )
 }
