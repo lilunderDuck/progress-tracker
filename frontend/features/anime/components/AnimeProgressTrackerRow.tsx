@@ -31,6 +31,8 @@ const row__notes = css`
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
+  flex: 1;
+  user-select: none;
 `
 
 const row__nameWrap = css`
@@ -105,11 +107,11 @@ export function AnimeProgressTrackerRow(props: IAnimeProgressTrackerRowProps) {
         <ProgressTrackerUndeterministicScoreCell class={`${row__personalRatingScoreCell} table__extraLeftPadding`} />
       </Show>
 
-      <div class="table__extraLeftPadding">
-        <p class={row__notes}>
+      <Tooltip label$={props.notes} anchorClass$={css`width: fit-content;`}>
+        <div class={`table__extraLeftPadding ${row__notes}`}>
           {props.notes}
-        </p>
-      </div>
+        </div>
+      </Tooltip>
     </div>
   )
 }
